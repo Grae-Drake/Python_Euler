@@ -1,17 +1,28 @@
-fibSec = [1,1]
-counter = 0
-term1 = 1
-term2 = 1
-while counter <=3524577:
-        counter = term1+term2
-        fibSec.append(counter)
-        term1 = term2
-        term2 = counter
-evenFibSec = []
-for i in fibSec:
-        if i%2==0:
-                evenFibSec.append(i)
-total = sum(evenFibSec)
-print(fibSec)
-print (evenFibSec)
-print(total)
+# Problem 1: Multiples of 3 and 5
+
+def generateFibonaccis(limit):
+
+	# Returns a list of all Fibonacci numbers less than limit
+	fibonaccis = [1,1]
+	term1 = 1
+	term2 = 1
+	while term1 + term2 < limit:
+		candidate = term1 + term2
+		fibonaccis.append(candidate)
+		term1, term2 = candidate, term1
+	return fibonaccis
+
+def evenSum(numList):
+	
+	# Returns the sum of all even numbers in the list provided
+	evenSum = 0
+	for x in numList:
+		if x % 2 == 0:
+			evenSum += x
+	return evenSum
+
+def main(limit):	
+
+	return(evenSum(generateFibonaccis(limit)))
+	
+print(main(4000000))
