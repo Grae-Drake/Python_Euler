@@ -1,5 +1,6 @@
         # Call these functions by importing Euler_Fucntions, then
         # Euler_Functions.function()
+import math
         
 def primeSieve(limit):
     array = [[x,True] for x in range(2,limit)]

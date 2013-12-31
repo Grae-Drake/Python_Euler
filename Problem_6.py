@@ -1,17 +1,19 @@
-range_100 = []
+# Problem 6: Sum square difference
 
-for i in range(1,101):
-        range_100.append(i)
+def squareOfSum(n):
 
-range_100_squares = []
+	# Returns the square of the sum of all natural numbers through n.
+	return sum(list(range(n+1))) ** 2
 
-for i in range_100:
-        range_100_squares.append(i**2)
+def sumOfSquares(n):
 
-sum_of_squares = sum(range_100_squares)
+	# Returns the sum of all squares of all natural numbers through n.
+	result = 0
+	for x in range(n + 1):
+		result += x ** 2
+	return result
 
-square_of_sum = (sum(range_100))**2
+def main(limit):
+	return (squareOfSum(limit) - sumOfSquares(limit))
 
-answer = sum_of_squares - square_of_sum
-
-print(answer)
+print(main(100))
