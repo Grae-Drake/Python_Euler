@@ -18,91 +18,104 @@ r17 = [4, 42, 16, 73, 38, 25, 39, 11, 24, 94, 72, 18, 8, 46, 29, 32, 40, 62, 76,
 r18 = [20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74, 4, 36, 16]
 r19 = [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54]
 r20 = [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
-table = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
+grid1 = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
+grid = [[51, 67, 63, 89],
+        [41, 92, 36, 54],
+        [22, 40, 40, 28],
+        [66, 33, 13, 80]]
 
-vertical = []
-horizontal = []
-diag_down = []
-diag_up = []
+def countGroup(grid, groupSize, direction):
 
-count_down = 0
-count_across = 0
+    """
+    Given a rectangular two-dimensional list of numbers (grid), this function
+    evaluates each horizontal, vertical, and diagonal group of numbers (of size
+    groupSize) and evaluates the product of the members of each group.  It then
+    returns the largest such product.
 
-    # Here we build a list with all the vertical 4-set products
-    # storing it in vertical
-while count_across <= 19:
-    while count_down <= 16:
-        vert1 = table[count_down][count_across]
-        vert2 = table[count_down + 1][count_across]
-        vert3 = table[count_down + 2][count_across]
-        vert4 = table[count_down + 3][count_across]
-        vertical.append(vert1 * vert2 * vert3 * vert4)
-        #vertical.append([vert1, vert2, vert3, vert4]) <--use for testing
-        count_down += 1
-    count_across +=1
-    count_down = 0
+    The direction parameter accepts the strings 'horizontal', 'vertical',
+    'diagonalUp', and 'diagonalDown'
+    """ 
 
-    # resetting the counts
-count_down = 0
-count_across = 0
+    # Initialize some variables.
+    gridWidth = len(grid[0])
+    gridHeight = len(grid)
+    result = 0
 
-    # Here we build a list with all the horizontal 4-set products
-    # storing it in horizontal
-while count_down <= 19:
-    while count_across <=16:
-        horiz1 = table[count_down][count_across]
-        horiz2 = table[count_down][count_across + 1]
-        horiz3 = table[count_down][count_across + 2]
-        horiz4 = table[count_down][count_across + 3]
-        horizontal.append(horiz1 * horiz2 * horiz3 * horiz4)
-        #horizontal.append([horiz1, horiz2, horiz3, horiz4])  <--use for testing
-        count_across += 1
-    count_down +=1
-    count_across = 0
+    # This dictionary will tell the function where in the grid to start, how to
+    # move, and where to stop based on whether the direction of the group.
+    settings = {
+        'horizontal': {
+            'xStart': 0,
+            'xStop': gridWidth - groupSize,
+            'yStart': 0,
+            'yStop': gridHeight,
+            'xIncrement': 1,
+            'yIncrement': 0
+        },
+        'vertical': {
+            'xStart': 0,
+            'xStop': gridWidth,
+            'yStart': 0,
+            'yStop': gridHeight - groupSize,
+            'xIncrement': 0,
+            'yIncrement': 1
+        },
+        'diagonalDown': {
+            'xStart': 0,
+            'xStop': gridWidth - groupSize,
+            'yStart': 0,
+            'yStop': gridHeight - groupSize,
+            'xIncrement': 1,
+            'yIncrement': 1       
+        },
+        'diagonalUp': {
+            'xStart': 0,
+            'xStop': gridWidth - groupSize,
+            'yStart': 0 + groupSize,
+            'yStop': gridHeight - groupSize,
+            'xIncrement': 1,
+            'yIncrement': -1
+        }
+    }
 
-    # resetting the counts
-count_down = 0
-count_across = 0
+    # Initalize settings variables based on the group direction.
+    xStart = settings[direction]['xStart']
+    xStop = settings[direction]['xStop']
+    yStart = settings[direction]['yStart']
+    yStop = settings[direction]['yStop']
+    xIncrement = settings[direction]['xIncrement']
+    yIncrement = settings[direction]['yIncrement']
+    xPosition = xStart
+    yPosition = yStart
 
-    # Here we build a list with all the diagonal down 4-set products,
-    # storing it in diag_down
-while count_across <= 16:
-    while count_down <= 16:
-        diagd1 = table[count_down][count_across]
-        diagd2 = table[count_down + 1][count_across + 1]
-        diagd3 = table[count_down + 2][count_across + 2]
-        diagd4 = table[count_down + 3][count_across + 3]
-        diag_down.append(diagd1 * diagd2 * diagd3 * diagd4)
-        #diag_down.append([diagd1, diagd2, diagd3, diagd4]) <-- use for testing
-        count_down += 1
-    count_across += 1
-    count_down = 0
-        
-    # resetting the counts, starting from the bottom left this time
-count_down = 19
-count_across = 0
+    # Iterate through the grid.
+    while xPosition < xStop + 1:
+        while yPosition < yStop + 1:
+            groupMultiple = 1
+            groupMembers = []
+            countUp = 0
+            while countUp < groupSize:
+                xSample = xPosition + (countUp * xIncrement)
+                ySample = yPosition + (countUp * yIncrement)
+                groupMultiple *= grid[ySample][xSample]
+                groupMembers.append(grid[ySample][xSample])
+                countUp += 1
+                print str(xSample) + ' ' + str(ySample)
+            yPosition += 1
+            if groupMultiple > result:
+                result = groupMultiple
+        yPosition = yStart
+        xPosition += 1
+    return result
 
-    # Here we build a list with all the diagonal up 4-set products,
-    # storing it in diag_up
-while count_across <= 16:
-    while count_down >= 3:
-        diagu1 = table[count_down][count_across]
-        diagu2 = table[count_down - 1][count_across + 1]
-        diagu3 = table[count_down - 2][count_across + 2]
-        diagu4 = table[count_down - 3][count_across + 3]
-        diag_up.append(diagu1 * diagu2 * diagu3 * diagu4)
-        #diag_up.append([diagu1, diagu2, diagu3, diagu4]) <-- use for testing
-        count_down -= 1
-    count_across += 1
-    count_down = 19
+def main():
+    return max([
+        countGroup(grid, 3, 'horizontal'),
 
-answer_list = []
-answer_list.extend(vertical)
-answer_list.extend(horizontal)
-answer_list.extend(diag_up)
-answer_list.extend(diag_down)
-answer_list.sort()
-answer = answer_list[-1]
-print(answer)
+    ])
 
+print(main())
+
+# Note: this is not giving the correct answer. WHERE DID I FUCK UP???
+# Getting IndexError; check limits and incrementing.
 
