@@ -1,36 +1,26 @@
-def calc_trig_num(x):
-        # This helper function calculates the x-th triangle number
-    triangle_number = 0
-    tcount = x
-    while tcount > 0:
-        triangle_number += tcount
-        tcount -= 1
-    return triangle_number
+# Problem 12: Highly divisible Triangular number
 
-def calc_factors(x):
-        # This helper function lists out each of the factors
-        # of a triangle number
+def calcFactors(n):
+
+    # Returns a the number of factors of n
     factors = []
-    for i in range(1, int(int(x)**.5)):
-        if x % i == 0:
+    for i in range(1, int(n ** .5) + 1):
+        if n % i == 0:
             factors.append(i)
-            factors.append(x/i)
-    factors.sort()
-    return len(factors)
+            factors.append(int(n/i))
+    return len(set(factors))
 
-def lowest_trig_num(n):
+def main(n):
     
-        # We calculate successively larger triangle numbers,
-        # untile we reach the required number of factors
-    num_of_factors = 0
-    count = 0
-    while num_of_factors <= n:
-        count += 1
-        triangle_number = calc_trig_num(count)
-        num_of_factors = calc_factors(triangle_number)
-        
-    return(triangle_number)
+    # Returns the first triangular number with at least n factors
+    triangle = 1
+    counter = 2
+    while True:
+        if calcFactors(triangle) >= n:
+            return triangle
+        else:
+            triangle += counter
+            counter += 1
 
-
-print(lowest_trig_num(500))
+print(main(500))
         
