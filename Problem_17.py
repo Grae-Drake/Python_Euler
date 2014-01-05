@@ -9,7 +9,7 @@ numbers = {
     19: "Nineteen", 20: "Twenty", 30: "Thirty", 40: "Forty", 50: "Fifty", 60:
     "Sixty", 70: "Seventy", 80: "Eighty", 90: "Ninety", 1000: "OneThousand"}
 
-def getNumberString(number):
+def getNumberString(number, numbers):
 
     # Takes an integer and returns a string describing that integer.
     # Ex: getNumberString(145) returns "OneHundredFourtyFive".
@@ -34,20 +34,20 @@ def getNumberString(number):
                     newValue = numbers[digit] + "Hundred" + newValue
     return newValue
 
-def populateNumbers():
+def populateNumbers(numbers):
 
-    # This function searches the dictionary for each number below 1000 and
-    # adds a new entry if it's not already in there.
+    # Start with minimally populated dictionary, iterating through range(1,1000)
+    # and adding new entries if not already there.  Returns the dictionary.
     for number in range(1,1000):
         if number not in numbers:
-            numbers[number] = getNumberString(number)
+            numbers[number] = getNumberString(number, numbers)
+    return numbers
 
 def main():
 
     # Invoke populateNumbers() and sum all strings in the full dictionary
-    populateNumbers()
     result = 0
-    for value in numbers.values():
+    for value in populateNumbers(numbers).values():
         result += len(value)
     return result
 
