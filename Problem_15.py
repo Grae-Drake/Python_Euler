@@ -1,10 +1,8 @@
-number = str(2**1000)
-listed = []
+# Problem 15: Lattice paths
 
-for i in number:
-    listed.append(int(i))
+import math
 
-answer = sum(listed)
+def main(length):
+	return (math.factorial(length * 2) / (math.factorial(length) ** 2))
 
-print(answer)
-
+print main(20)
