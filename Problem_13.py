@@ -1,16 +1,12 @@
-grid = open("Problem_13_Grid.txt")
+# Problem 13: Large sum
 
-big_list = []
-new_list = []
+def main():
 
-for line in grid:
-    big_list.append(str(line))
+	# Returns the first 10 digits of the sum of each of the numbers
+	# in "Problem_13_Grid.txt"
 
-for item in big_list:
-    new_list.append(int(item.rstrip()))
-    
-answer = str(sum(new_list))
+	data = open("/Users/graedrake/Documents/Projects/Python_Euler/TextFiles/Problem13Data.txt")
+	return str(sum([int(str(line).rstrip()) for line in data]))[:10]
 
-print(answer[:10])
-
+print main()
 
