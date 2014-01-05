@@ -1,3 +1,6 @@
+# Problem 11: Largets product in a grid
+
+# This is the grid we're searching for products.
 r1 = [8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8]
 r2 = [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 00]
 r3 = [81, 49, 31, 73, 55, 79, 14, 29, 93, 71, 40, 67, 53, 88, 30, 3, 49, 13, 36, 65]
@@ -18,11 +21,7 @@ r17 = [4, 42, 16, 73, 38, 25, 39, 11, 24, 94, 72, 18, 8, 46, 29, 32, 40, 62, 76,
 r18 = [20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74, 4, 36, 16]
 r19 = [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54]
 r20 = [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
-grid1 = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
-grid = [[51, 67, 63, 89],
-        [41, 92, 36, 54],
-        [22, 40, 40, 28],
-        [66, 33, 13, 80]]
+grid = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
 
 def countGroup(grid, groupSize, direction):
 
@@ -37,16 +36,15 @@ def countGroup(grid, groupSize, direction):
     """ 
 
     # Initialize some variables.
-    gridWidth = len(grid[0])
     gridHeight = len(grid)
-    result = 0
+    gridWidth = len(grid[0])
 
     # This dictionary will tell the function where in the grid to start, how to
     # move, and where to stop based on whether the direction of the group.
     settings = {
         'horizontal': {
             'xStart': 0,
-            'xStop': gridWidth - groupSize,
+            'xStop': gridWidth - groupSize + 1,
             'yStart': 0,
             'yStop': gridHeight,
             'xIncrement': 1,
@@ -56,23 +54,23 @@ def countGroup(grid, groupSize, direction):
             'xStart': 0,
             'xStop': gridWidth,
             'yStart': 0,
-            'yStop': gridHeight - groupSize,
+            'yStop': gridHeight - groupSize + 1,
             'xIncrement': 0,
             'yIncrement': 1
         },
         'diagonalDown': {
             'xStart': 0,
-            'xStop': gridWidth - groupSize,
+            'xStop': gridWidth - groupSize + 1,
             'yStart': 0,
-            'yStop': gridHeight - groupSize,
+            'yStop': gridHeight - groupSize + 1,
             'xIncrement': 1,
             'yIncrement': 1       
         },
         'diagonalUp': {
             'xStart': 0,
-            'xStop': gridWidth - groupSize,
-            'yStart': 0 + groupSize,
-            'yStop': gridHeight - groupSize,
+            'xStop': gridWidth - groupSize + 1,
+            'yStart': 0 + groupSize - 1,
+            'yStop': gridHeight,
             'xIncrement': 1,
             'yIncrement': -1
         }
@@ -85,37 +83,28 @@ def countGroup(grid, groupSize, direction):
     yStop = settings[direction]['yStop']
     xIncrement = settings[direction]['xIncrement']
     yIncrement = settings[direction]['yIncrement']
-    xPosition = xStart
-    yPosition = yStart
+    result = 0
 
     # Iterate through the grid.
-    while xPosition < xStop + 1:
-        while yPosition < yStop + 1:
+    for x in range(xStart, xStop):
+        for y in range(yStart, yStop):
             groupMultiple = 1
-            groupMembers = []
             countUp = 0
             while countUp < groupSize:
-                xSample = xPosition + (countUp * xIncrement)
-                ySample = yPosition + (countUp * yIncrement)
-                groupMultiple *= grid[ySample][xSample]
-                groupMembers.append(grid[ySample][xSample])
+                gridElement = grid[y + (yIncrement * countUp)][x + (xIncrement * countUp)]
+                groupMultiple *= gridElement
                 countUp += 1
-                print str(xSample) + ' ' + str(ySample)
-            yPosition += 1
             if groupMultiple > result:
                 result = groupMultiple
-        yPosition = yStart
-        xPosition += 1
     return result
 
-def main():
+def main(grid, groupSize):
     return max([
-        countGroup(grid, 3, 'horizontal'),
-
+        countGroup(grid, groupSize, 'horizontal'),
+        countGroup(grid, groupSize, 'vertical'),
+        countGroup(grid, groupSize, 'diagonalUp'),
+        countGroup(grid, groupSize, 'diagonalDown'),
     ])
 
-print(main())
-
-# Note: this is not giving the correct answer. WHERE DID I FUCK UP???
-# Getting IndexError; check limits and incrementing.
+print(main(grid, 4))
 
