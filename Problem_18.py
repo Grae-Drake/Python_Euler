@@ -1,29 +1,22 @@
     # Problem 18: Maximum path sum
 
-triangle = []
-t = open("triangle.txt")
-for line in t:
-    triangle.append(line.split())
-t.close()
+import time
+t1 = time.clock()
 
-triangle2 = []
-for x in triangle:
-    newx = []
-    for y in x:
-        newx.append(int(y))
-    triangle2.append(newx)
-print(triangle2)
+triangleFile = open("/Users/graedrake/Documents/Projects/Python_Euler/TextFiles/Problem18Data.txt")
+triangle = [x.split() for x in triangleFile]
+triangleFile.close()
 
-triangle3 = [triangle2[-1]]
-count = 2
-while count < 101:
-    line2 = []
-    for index, y in enumerate(triangle2[-count]):
-        a = triangle3[-1][index]
-        b = triangle3[-1][index+1]
-        line2.append(y + max(a, b))
-    triangle3.append(line2)
-    count += 1
+def main(triangle):
+    
+    revisedTriangle = triangle[-2::-1]
+    for i, row in enumerate(revisedTriangle):
+        for j, element in enumerate(row):
+            lowerElement0 = int(triangle[-(i+1)][j])
+            lowerElement1 = int(triangle[-(i+1)][j+1])
+            revisedTriangle[i][j] = int(element) + max(lowerElement0, lowerElement1)
+    return revisedTriangle[-1][0]
 
-print(triangle3[-1])
+print(main(triangle))
+print "Execution time: " + str(time.clock() - t1) + " seconds."
 
