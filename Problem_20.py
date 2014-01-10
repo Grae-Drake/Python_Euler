@@ -1,17 +1,19 @@
-    # Find the product of the digits of 100!
+# Problem 20: Factorial digit sum
 
-def fact_dig_product(x):
-        #This function returns the product of the digits of x!
-    counter = x
-    factorial = 1
-    while counter > 1:
-        factorial *= counter
-        counter -= 1
-    fact_str = str(factorial)
-    fact_list = []
-    for item in fact_str:
-        fact_list.append(int(item))
-    answer = sum(fact_list)
-    return answer
+def factorial(n):
 
-print(fact_dig_product(100))
+    # Returns n! (n factorial).
+    return n if n <= 1 else n * factorial(n-1)
+
+def sumDigits(n):
+
+    # Returns the sum of the digits of n.
+    return sum([int(x) for x in list(str(n))])
+
+def factorialDigitSum(n):
+    
+    # Returns the sum of the digits of n! (n factorial).
+    return sumDigits(factorial(n))
+
+print(factorialDigitSum(100))
+
