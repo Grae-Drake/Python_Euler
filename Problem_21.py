@@ -2,7 +2,7 @@
 
 def proper_factors(n):
 
-    # Returns a list of n's proper factors
+    # Returns a list of n's proper factors.
     proper_factors = [1]
     for number in range(2,int(n**.5)+1):
         if n % number == 0:
@@ -22,7 +22,7 @@ def number_factor_sum_pairs(limit):
 
 def amicable_numbers(limit):
 
-    # Returns a list of amicable numbers below limit
+    # Returns a list of amicable numbers below limit.
     result = []
     my_dict = number_factor_sum_pairs(limit)
     for key in my_dict:
