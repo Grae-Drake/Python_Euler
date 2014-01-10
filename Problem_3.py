@@ -1,6 +1,6 @@
 # Problem 3: Largest Prime Factor
 
-def isPrime(n):
+def is_prime(n):
 
 	# Returns True if n in prime; otherwise returns False
 	if n == 2 or n == 3: return True
@@ -15,19 +15,19 @@ def isPrime(n):
 		f += 6
 	return True
 
-def generatePrimeFactors(n):
+def generate_prime_factors(n):
 
 	# Returns a sorted list of the prime factors of n.
 	factors = []
 	for x in range(2, int(n ** .5)):
 		if n % x == 0:
 			cofactor = n / x
-			if isPrime(x):
+			if is_prime(x):
 				factors.append(x)
-			if isPrime(cofactor):
+			if is_prime(cofactor):
 				factors.append(cofactor)
 	factors.sort()
 	return factors
 
 # Print the final element in the list of prime factors
-print(generatePrimeFactors(600851475143)[-1])
+print(generate_prime_factors(600851475143)[-1])

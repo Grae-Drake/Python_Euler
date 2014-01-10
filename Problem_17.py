@@ -9,10 +9,10 @@ numbers = {
     19: "Nineteen", 20: "Twenty", 30: "Thirty", 40: "Forty", 50: "Fifty", 60:
     "Sixty", 70: "Seventy", 80: "Eighty", 90: "Ninety", 1000: "OneThousand"}
 
-def getNumberString(number, numbers):
+def get_number_string(number, numbers):
 
     # Takes an integer and returns a string describing that integer.
-    # Ex: getNumberString(145) returns "OneHundredFourtyFive".
+    # Ex: get_number_string(145) returns "OneHundredFourtyFive".
     newValue = ""
     digitsReversed = [int(x) for x in str(number)[::-1]]
     for index, digit in enumerate(digitsReversed):
@@ -34,20 +34,20 @@ def getNumberString(number, numbers):
                     newValue = numbers[digit] + "Hundred" + newValue
     return newValue
 
-def populateNumbers(numbers):
+def populate_numbers(numbers):
 
     # Start with minimally populated dictionary, iterating through range(1,1000)
     # and adding new entries if not already there.  Returns the dictionary.
     for number in range(1,1000):
         if number not in numbers:
-            numbers[number] = getNumberString(number, numbers)
+            numbers[number] = get_number_string(number, numbers)
     return numbers
 
 def main():
 
-    # Invoke populateNumbers() and sum all strings in the full dictionary
+    # Invoke populate_numbers() and sum all strings in the full dictionary
     result = 0
-    for value in populateNumbers(numbers).values():
+    for value in populate_numbers(numbers).values():
         result += len(value)
     return result
 

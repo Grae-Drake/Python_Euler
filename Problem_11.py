@@ -23,7 +23,7 @@ r19 = [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5,
 r20 = [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 grid = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
 
-def countGroup(grid, groupSize, direction):
+def count_group(grid, groupSize, direction):
 
     """
     Given a rectangular two-dimensional list of numbers (grid), this function
@@ -100,10 +100,10 @@ def countGroup(grid, groupSize, direction):
 
 def main(grid, groupSize):
     return max([
-        countGroup(grid, groupSize, 'horizontal'),
-        countGroup(grid, groupSize, 'vertical'),
-        countGroup(grid, groupSize, 'diagonalUp'),
-        countGroup(grid, groupSize, 'diagonalDown'),
+        count_group(grid, groupSize, 'horizontal'),
+        count_group(grid, groupSize, 'vertical'),
+        count_group(grid, groupSize, 'diagonalUp'),
+        count_group(grid, groupSize, 'diagonalDown'),
     ])
 
 print(main(grid, 4))

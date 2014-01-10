@@ -1,6 +1,6 @@
 # Problem 12: Highly divisible Triangular number
 
-def calcFactors(n):
+def calc_factors(n):
 
     # Returns a the number of factors of n
     factors = []
@@ -16,7 +16,7 @@ def main(n):
     triangle = 1
     counter = 2
     while True:
-        if calcFactors(triangle) >= n:
+        if calc_factors(triangle) >= n:
             return triangle
         else:
             triangle += counter

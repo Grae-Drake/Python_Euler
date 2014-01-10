@@ -1,6 +1,6 @@
 # Problem 1: Multiples of 3 and 5
 
-def generateFibonaccis(limit):
+def generate_fibonaccis(limit):
 
 	# Returns a list of all Fibonacci numbers less than limit
 	fibonaccis = [1,1]
@@ -23,6 +23,6 @@ def evenSum(numList):
 
 def main(limit):	
 
-	return(evenSum(generateFibonaccis(limit)))
+	return(evenSum(generate_fibonaccis(limit)))
 	
 print(main(4000000))

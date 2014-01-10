@@ -1,11 +1,11 @@
 # Problem 6: Sum square difference
 
-def squareOfSum(n):
+def square_of_sum(n):
 
 	# Returns the square of the sum of all natural numbers through n.
 	return sum(list(range(n+1))) ** 2
 
-def sumOfSquares(n):
+def sum_of_squares(n):
 
 	# Returns the sum of all squares of all natural numbers through n.
 	result = 0
@@ -14,6 +14,6 @@ def sumOfSquares(n):
 	return result
 
 def main(limit):
-	return (squareOfSum(limit) - sumOfSquares(limit))
+	return (square_of_sum(limit) - sum_of_squares(limit))
 
 print(main(100))

@@ -2,7 +2,7 @@
 
 import math
 
-def primeSieve(limit):
+def prime_sieve(limit):
     
     # Returns a list of prime numbers below limit.
     array = [True for x in (range(limit))]      # Initialize array of booleans.
@@ -22,5 +22,5 @@ def primeSieve(limit):
 def main(limit):
 
     # Returns the sum of all prime numbers below limit.
-    return sum(primeSieve(limit))
+    return sum(prime_sieve(limit))
 print main(2000000)

@@ -3,7 +3,7 @@
 import time
 t1 = time.clock()
 
-def getSequenceLength(n):
+def get_sequence_length(n):
 
     # Returns the number of elements in n's Collatz sequence
     counter = 1
@@ -23,7 +23,7 @@ def main(limit):
     result = 0
     longestSequence = 0
     for n in range(1,limit):
-        sequenceLength = getSequenceLength(n)
+        sequenceLength = get_sequence_length(n)
         if sequenceLength > longestSequence:
             longestSequence = sequenceLength
             result = n

@@ -1,6 +1,6 @@
 # Problem 19: Counting Sundays
 
-def createCalendar():
+def create_calendar():
   """Returns a 3d list of 100 years of 12 months of 28-31 days."""
 
   calendar = {}
@@ -16,7 +16,7 @@ def createCalendar():
     yearCounter += 1
   return calendar
 
-print(createCalendar())
+print(create_calendar())
 
 
 
