@@ -7,32 +7,23 @@
     #   Second, figure out which numbers from 1-28123 are not the sum of
     #   any two abundant numbers.
     #   Third, sum those numbers.
-import time
-import math
+import time, math
 
 t0 = time.clock()
 
 def calc_proper_factors(x):
-    proper_factors = []
-    for item in range(2,int(math.sqrt(x)+1)):
-        if x % item == 0:
-            proper_factors.append(item)
-            
-            if int(x/item) not in proper_factors:
-                proper_factors.append(int(x/item))
+
+    # Returns a list of proper factors of x
+    proper_factors = sum([[y, x/y] for y in range(2,int(math.sqrt(x)+1)) if x % y == 0], [])
     proper_factors.append(1)
     return proper_factors
 
 def list_abundant_nums(limit):
-    big_list = [[item, 0] for item in range(1,limit+1)]
-    for item in big_list:
-        item[1] = sum(calc_proper_factors(item[0]))
 
-    abundant_nums = []
-    for item in big_list:
-        if item[0] < item[1]:
-            abundant_nums.append(item[0])
-    return abundant_nums
+    # Returns a list of all abundant numbers below limit
+    result = [x for x in range(1,limit+1) if x < sum(calc_proper_factors(x))]
+
+    return result
     
 def list_non_abundant_sums(limit):
     non_sums = []
@@ -50,8 +41,9 @@ def list_non_abundant_sums(limit):
             non_sums.append(number)
         found = False
     return non_sums
-    
-print(list_non_abundant_sums(100))
+ 
+print calc_proper_factors(28)    
+#print(list_non_abundant_sums(100))
 
 t1 = time.clock()
 
