@@ -1,26 +1,14 @@
-    # Problem 22: Names Scores
+# Problem 22: Names Scores
 
-    # First, let's make a sorted list of the names:
+# First, let's make a sorted list of the names:
+file_path = "/Users/graedrake/Documents/Projects/Python_Euler/TextFiles/problem_22_names.txt"
+names_file = open(file_path)
+names_str = names_file.read()                   # Read the file into a string
+names_file.close()                              # Close the file
+names_str1 = names_str[1:-1]                    # Delete the first and last ""s
+names_list = sorted((names_str1.split('","')))  # Split and sort
 
-names_file = open("problem_22_names.txt")   # Open the file
-names_str = names_file.read()               # Read the file into a string
-names_file.close()                          # Close the file
-names_str1 = names_str[1:-1]                # Delete the first and last ""s
-names_list = (names_str1.split('","'))      # Split the string and make a list
-names_list.sort()                           # Sort the list alphabetically
-
-    # Now we have a sorted list of strings.
-    # Let's make that into a sorted list of lists, where
-    # each sub-list has the name-string, the index in
-    # the list (starting at 1) and the number value of the name.
-
-big_list = []
-for index, item in enumerate(names_list, start=1):
-    big_list.append([item, index, [0]])
-
-    # Now we need to calculate and assign the number values for each name.
-    # Let's start by creating a dictionary with letter values
-
+# Dictionary with letter scores
 alphabet = {
     "A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8,
     "I": 9, "J": 10, "K": 11, "L": 12, "M": 13, "N": 14, "O": 15,
@@ -28,26 +16,17 @@ alphabet = {
     "W": 23, "X": 24, "Y": 25, "Z": 26
     }
 
-    # Let's loop over the first element of each element in the big_list,
-    # iterate over the string to create a list of numbers (by reference
-    # to the dictionary 'alphabet', replace the [0] in each entry
-    # with the list of numbers we generated, and finally replace that list
-    # of numbers with a som of those numbers
+def score_name(name):
 
-for entry in big_list:
-    for letter in entry[0]:
-        entry[2].append(alphabet[letter])
-    entry[2] = sum(entry[2])
+    # Returns the name score of the input name
+    return sum([alphabet[letter] for letter in name])
 
-    # All that's left to do is sum multiply the second and third elements
-    # and sum the products
+def main():
 
-answer = 0
+    # returns the sum of each name score times each name index in names_list
+    return sum([index * score_name(name) for index, name in enumerate(names_list, start=1)])
 
-for entry in big_list:
-    answer += (entry[1]*entry[2])
-
-print(answer)
+print(main())
 
 
 
