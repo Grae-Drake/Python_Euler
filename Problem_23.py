@@ -1,12 +1,5 @@
-    # Problem 23: Non-abundant sums
-    # Find the sum of all the positive integers which cannot be written
-    # as the sum of two abundant numbers
+# Problem 23: Non-abundant sums
 
-    # Steps:
-    #   First, list all abundant numbers up to 28123
-    #   Second, figure out which numbers from 1-28123 are not the sum of
-    #   any two abundant numbers.
-    #   Third, sum those numbers.
 import time, math
 
 t0 = time.clock()
@@ -14,38 +7,35 @@ t0 = time.clock()
 def calc_proper_factors(x):
 
     # Returns a list of proper factors of x
-    proper_factors = sum([[y, x/y] for y in range(2,int(math.sqrt(x)+1)) if x % y == 0], [])
+    proper_factors = [[y, x/y] for y in range(2,int(math.sqrt(x) + 1)) if x % y == 0]
+    proper_factors = sum(proper_factors, [])
     proper_factors.append(1)
-    return proper_factors
+    return set(proper_factors)  
 
-def list_abundant_nums(limit):
+def list_abundant_numbers(limit):
 
     # Returns a list of all abundant numbers below limit
-    result = [x for x in range(1,limit+1) if x < sum(calc_proper_factors(x))]
-
-    return result
+    return [x for x in range(1,limit+1) if x < sum(calc_proper_factors(x))]
     
 def list_non_abundant_sums(limit):
-    non_sums = []
-    abundant_nums = list_abundant_nums(limit)
-    found = False
     
-    for number in range(1, limit):
-        for i in range(len(abundant_nums)):
-            for j in range(i, len(abundant_nums)):
-                if abundant_nums[i] + abundant_nums[j] == number:
-                    found = True
-                elif abundant_nums[i] + abundant_nums[j] > number:
-                    break
-        if found == False:
-            non_sums.append(number)
-        found = False
-    return non_sums
- 
-print calc_proper_factors(28)    
-#print(list_non_abundant_sums(100))
+    # Returns a list of all numbers below limit that are not the sum of two
+    # abundant numbers.  Could be improved with a sieving technique.
+    result = []
+    abundant_sums = {}
+    abundant_numbers = list_abundant_numbers(limit)
+    for index1, i in enumerate(abundant_numbers):
+        for j in abundant_numbers[index1:]:
+            if i + j < limit:
+                abundant_sums[i + j] = True
+            else:
+                break
+    for x in range(limit):
+        if x not in abundant_sums.keys():
+            result.append(x)
+    return result
 
-t1 = time.clock()
+print sum(list_non_abundant_sums(28123))
 
-print(t1-t0)
+print "Execution time: " + str(time.clock()-t0)[:4] + " seconds"
 

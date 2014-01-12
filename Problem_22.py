@@ -23,7 +23,7 @@ def score_name(name):
 
 def main():
 
-    # returns the sum of each name score times each name index in names_list
+    # returns the sum of each name score multiplied by its name index
     return sum([index * score_name(name) for index, name in enumerate(names_list, start=1)])
 
 print(main())
