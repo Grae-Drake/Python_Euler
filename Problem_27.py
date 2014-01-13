@@ -1,4 +1,7 @@
         # Problem 27: Quadratic Primes
+import time
+t0 = time.clock()
+
 def is_prime(n):
 
     # Returns True is n is prime, otherwise False
@@ -13,9 +16,9 @@ def is_prime(n):
             return False
     return True
 
-def consecQuadPrimes(a,b):
+def consecutive_quadratic_primes(a,b):
 
-    # Given parameters a and b, returns the number of consecute prime numbers
+    # Given parameters a and b, returns the number of consecutive prime numbers
     # resulting from the quadratic formula n**2 + an + b, starting from n = 0.
     n = 0
     primecount = 0
@@ -26,14 +29,16 @@ def consecQuadPrimes(a,b):
         else:
             return primecount
 
-alpha = -999
-results = []
-while alpha < 1000:
-        beta = -999
-        while beta < 1000:
-                results.append([consecQuadPrimes(alpha,beta),alpha,beta])
-                beta += 1
-        alpha += 1
+def main(limit):
+    result = [0,0,0]
+    for b in range(-limit + 1, limit):
+        if is_prime(abs(b)):
+            for a in range(-limit + 1, limit):
+                consecutive = consecutive_quadratic_primes(a,b)
+                if consecutive > result[0]:
+                    result = [consecutive,a,b]
+    return result
 
-results.sort()
-print(results[-1])
+print main(1000)
+
+print "Execution time: " + str(time.clock() - t0)[:5] + " seconds."
