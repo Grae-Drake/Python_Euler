@@ -1,12 +1,13 @@
-        # Problem 29: Distinct Powers
+# Problem 29: Distinct Powers
 
-results = []
-for a in range(2,101):
-    for b in range(2,101):
-        results.append(a**b)
+def main(a,b):
 
-results = list(set(results))
-results.sort()
-print(len(results))
+	# Returns the number of unique values produced by x**y for 1 < x < a
+	# and 1 < y < b.
+	results = []
+	for x in range(2,a):
+	    for y in range(2,b):
+	        results.append(x**y)
+	return len(list(set(results)))
 
-print(len('1'))
+print main(101,101)
