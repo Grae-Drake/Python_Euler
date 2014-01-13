@@ -1,11 +1,16 @@
-# Problem 25
-# 1,000 digit Fibonacci number
+# Problem 25: 1,000 digit Fibonacci number
 
-fibs = [1,1]
+import time
+t0 = time.clock()
 
-while len(str((fibs[-1])))<1000:
-    newnum = fibs[-1] + fibs [-2]
-    fibs.append(newnum)
+def first_n_digit_fibonacci_number(n):
 
-print(len(fibs))
-print(fibs[-1])
+	# Returns the index number of the first Fibonacci number with n digits.
+	fibs = [1,1]
+	while len(str((fibs[-1]))) < n:
+	    newnum = fibs[-1] + fibs [-2]
+	    fibs.append(newnum)
+	return len(fibs)
+
+print first_n_digit_fibonacci_number(1000)
+print "Execution time: " + str(time.clock() - t0)[:5] + " seconds."
