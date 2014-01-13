@@ -1,18 +1,16 @@
-    # Problem 26: Reciprical cycles
+# Problem 26: Reciprical cycles
 
-import time
+def get_recurring_cycle(numerator, denominator):
 
-for x in range(1,11):
-    num = 1
-    denom = x
-    remainder = 0
-    expansion = []
-    while True:
-        expansion.append(num//denom)
-        remainder = num % denom
-        break
-    print(expansion)
-    print(remainder)
+    # Returns the recurring cycle of the decimal representation of the quotient
+    # of numerator / denominator.
+    result = []
+    r = numerator/denominator
+    d = denominator * r
+    result.append(r)
+    print numerator%denominator
 
-t2 = time.clock()
-print("Execution time: ", str(t2-t1)[:5])
+get_recurring_cycle(10,7)
+
+"UGGGGGGGGGGGHG"
+    

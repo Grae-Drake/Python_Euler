@@ -1,5 +1,7 @@
         # Problem 27: Quadratic Primes
-def isPrime(n):
+def is_prime(n):
+
+    # Returns True is n is prime, otherwise False
     if n < 2:
         return False
     if n == 2: 
@@ -12,16 +14,16 @@ def isPrime(n):
     return True
 
 def consecQuadPrimes(a,b):
+
+    # Given parameters a and b, returns the number of consecute prime numbers
+    # resulting from the quadratic formula n**2 + an + b, starting from n = 0.
     n = 0
     primecount = 0
-    finished = False
-    while finished == False:
-        testnum = n**2 + a*n +b
-        if isPrime(testnum) == True:
+    while True:
+        if is_prime(n**2 + a*n +b):
             n += 1
             primecount += 1
         else:
-            finshed = True
             return primecount
 
 alpha = -999
