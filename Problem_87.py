@@ -1,8 +1,8 @@
 # Problem 87: Prime Power Triples
 
-import Euler
+import  C:\Users\Grae\Documents\Projects\Python_Euler\Functions\Euler
 
-def main(limit)
+def main(limit):
 
 	fourth_power = [x ** 4 for x in Euler.prime_sieve(int(limit **.25))]
 	third_power = [x ** 4 for x in Euler.prime_sieve(int(limit ** (1/3)))]
