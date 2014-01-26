@@ -27,6 +27,5 @@ while result < 1000000:
 				result -= n-m -1
 		n +=1
 	m += 1
-
 print result, m-1
 print "Execution time: " + str(time.clock()-t0)[:5] + " seconds."
