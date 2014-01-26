@@ -2,7 +2,7 @@
         # Euler_Functions.function()
 import math
         
-def primeSieve(limit):
+def prime_sieve(limit):
     array = [[x,True] for x in range(2,limit)]
 
     for x in array:
