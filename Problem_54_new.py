@@ -39,16 +39,19 @@ class Hand(object):
 		for card in cards:
 			if card[1] != suit:
 				return {'flush': False}
-		return {'flush': True}
+		return {'flush': True, 'suit': suit}
 
 	def straight_check(self, cards):
 		for index, card in enumerate(self.sorted_hand[:-1]):
 			if self.sorted_hand[index + 1] != card + 1:
 				return {'straight': False}
-		return {'straight': True}
+		return {'straight': True, 'highest': self.sorted_hand[-1]}
 
 	def four_kind_check(self, cards):
-		pass
+		for index, card in enumerate(self.sorted_hand):
+			if self.sorted_hand.count(card) == 4:
+				return {'four_kind': True, 'fours': card}
+		return {'four_kind': False}
 
 	def full_house_check(self, cards):
 		pass
@@ -68,7 +71,7 @@ class Hand(object):
 ## Functions for manipulating hands
 
 def sort_hand(cards):
-	# Returnds a sorted list of integers representing the hand
+	# Returns a sorted list of integers representing the hand
 	translator = {'2': 2,'3': 3,'4': 4,'5': 5,'6': 6,'7': 7,'8': 8,'9': 9,
 		'T': 10,'J': 11,'Q': 12,'K': 13,'A': 14}
 
