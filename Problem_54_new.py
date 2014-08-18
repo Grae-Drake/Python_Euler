@@ -48,13 +48,25 @@ class Hand(object):
 		return {'straight': True, 'highest': self.sorted_hand[-1]}
 
 	def four_kind_check(self, cards):
-		for index, card in enumerate(self.sorted_hand):
+		for card in self.sorted_hand:
 			if self.sorted_hand.count(card) == 4:
 				return {'four_kind': True, 'fours': card}
 		return {'four_kind': False}
 
 	def full_house_check(self, cards):
-		pass
+		threes = 0
+		twos = 0
+		for card in self.sorted_hand:
+			if self.sorted_hand.count(card) == 3:
+				threes = card
+		for card in self.sorted_hand:
+			if self.sorted_hand.count(card) == 2:
+				twos = card
+		if threes and twos:
+			return {"full_house": True, "threes": threes, "twos": twos}
+		else:
+			return {"full_house": False}
+
 
 	def three_kind_check(self, cards):
 		pass
