@@ -16,6 +16,9 @@ class Hand(object):
 
 	# Create a hand object with a list of five cards.
 	def __init__(self, cards):
+
+		self.sorted_hand = sort_hand(cards)
+
 		self.flush = self.flush_check(cards)
 		self.straight = self.straight_check(cards)
 		self.four_kind = self.four_kind_check(cards)
@@ -24,19 +27,25 @@ class Hand(object):
 		self.two_pair = self.two_pair_check(cards)
 		self.pair = self.pair_check(cards)
 		self.highcard = self.highcard_check(cards)
-		self.sorted_hand = sort_hand(cards)
+		
 
-	# Methods to determine and set the possible xhands.
+	# Methods to determine and set the possible hands.
+
+	def show_hand(self):  # For testing
+		print self.sorted_hand
 
 	def flush_check(self, cards):
 		suit = cards[0][1]
 		for card in cards:
 			if card[1] != suit:
 				return {'flush': False}
-		return {'flush': True, 'sorted_hand': sort_hand(cards)}
+		return {'flush': True}
 
 	def straight_check(self, cards):
-		pass
+		for index, card in enumerate(self.sorted_hand[:-1]):
+			if self.sorted_hand[index + 1] != card + 1:
+				return {'straight': False}
+		return {'straight': True}
 
 	def four_kind_check(self, cards):
 		pass
@@ -63,6 +72,6 @@ def sort_hand(cards):
 	translator = {'2': 2,'3': 3,'4': 4,'5': 5,'6': 6,'7': 7,'8': 8,'9': 9,
 		'T': 10,'J': 11,'Q': 12,'K': 13,'A': 14}
 
-	return [translator[card[0]] for card in cards].sort()
+	return sorted([translator[card[0]] for card in cards])
 
 ## Compare Hands
