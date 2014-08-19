@@ -1,24 +1,19 @@
 # Problem 54: Poker Hands
 
-import os
-
 ## Parse the text file.
 
 raw_hands = 'TextFiles/poker.txt'
 with open(raw_hands, 'r+') as my_file:
 	games = [line.split() for line in my_file.readlines()]
-print games[1][-1] # For testing the parse.
+print games[1] # For testing the parse.
 
-
-## Do objects
-
+## "Hand" class will contain attributes of a five card hand.
 class Hand(object):
 
 	# Create a hand object with a list of five cards.
 	def __init__(self, cards):
 
 		self.sorted_hand = sort_hand(cards)
-
 		self.flush = self.flush_check(cards)
 		self.straight = self.straight_check(cards)
 		self.four_kind = self.four_kind_check(cards)
@@ -29,7 +24,7 @@ class Hand(object):
 		self.highcard = self.highcard_check(cards)
 		
 
-	# Methods to determine and set the possible hands.
+	# Methods to evaluate attributes of hands.
 
 	def show_hand(self):  # For testing
 		print self.sorted_hand
@@ -80,6 +75,7 @@ class Hand(object):
 				twos.append(card)
 		if len(set(twos)) == 2:
 			return {'two_pair': True, 'pairs': sorted(set(twos))}
+		return {'two_pair': False}
 
 	def pair_check(self, cards):
 		twos = []
@@ -206,7 +202,7 @@ def did_p1_win(p1_hand, p2_hand):
 				return compare_highcard(p1_hand, p2_hand)
 
 		else:
-			return compare_two_pair
+			return compare_two_pair(p1_hand, p2_hand)
 
 
 	def compare_two_pair(p1_hand, p2_hand):
@@ -263,8 +259,8 @@ def did_p1_win(p1_hand, p2_hand):
 
 	def compare_highcard(p1_hand, p2_hand):
 
-		p1_high_to_low = sorted(p1_hand.sorted_hand, True)
-		p2_high_to_low = sorted(p2_hand.sorted_hand, True)
+		p1_high_to_low = sorted(p1_hand.sorted_hand, reverse=True)
+		p2_high_to_low = sorted(p2_hand.sorted_hand, reverse=True)
 
 		for x in range(5):
 			if p1_high_to_low[x] > p2_high_to_low[x]:
@@ -272,4 +268,19 @@ def did_p1_win(p1_hand, p2_hand):
 			elif p1_high_to_low[x] < p2_high_to_low[x]:
 				return False
 
+	return compare_flush(p1_hand, p2_hand)
+
+# Get down to business
+
+def main():
+	result = 0
+	for game in games:
+		p1_hand = Hand(game[:5])
+		p2_hand = Hand(game[5:])
+		if did_p1_win(p1_hand, p2_hand):
+			result += 1
+	return result
+
+if __name__ == '__main__':
+	print main()
 
