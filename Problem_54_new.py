@@ -67,19 +67,33 @@ class Hand(object):
 		else:
 			return {"full_house": False}
 
-
 	def three_kind_check(self, cards):
-		pass
+		for card in self.sorted_hand:
+			if self.sorted_hand.count(card) == 3:
+				return {'three_kind': True, 'threes': card}
+		return {'three_kind': False}
 
 	def two_pair_check(self, cards):
-		pass
+		twos = []
+		for card in self.sorted_hand:
+			if self.sorted_hand.count(card) == 2:
+				twos.append(card)
+		if len(set(twos)) == 2:
+			return {'two_pair': True, 'pairs': sorted(set(twos))}
 
 	def pair_check(self, cards):
-		pass
+		twos = []
+		for card in self.sorted_hand:
+			if self.sorted_hand.count(card) == 2:
+				twos.append(card)
+		if len(set(twos)) == 1:
+			return {'pair': True, 'pair': twos[0]}
+		return{'pair': False}
 
 	def highcard_check(self, cards):
-		pass
-
+		return self.sorted_hand
+		
+		
 ## Functions for manipulating hands
 
 def sort_hand(cards):
