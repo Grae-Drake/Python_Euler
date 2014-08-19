@@ -87,20 +87,189 @@ class Hand(object):
 			if self.sorted_hand.count(card) == 2:
 				twos.append(card)
 		if len(set(twos)) == 1:
-			return {'pair': True, 'pair': twos[0]}
+			return {'pair': True, 'pair_value': twos[0]}
 		return{'pair': False}
 
 	def highcard_check(self, cards):
 		return self.sorted_hand
 		
-		
+
 ## Functions for manipulating hands
 
 def sort_hand(cards):
-	# Returns a sorted list of integers representing the hand
+	# Returns a sorted list of integers representing the hand. Disregards suit.
 	translator = {'2': 2,'3': 3,'4': 4,'5': 5,'6': 6,'7': 7,'8': 8,'9': 9,
 		'T': 10,'J': 11,'Q': 12,'K': 13,'A': 14}
 
 	return sorted([translator[card[0]] for card in cards])
 
 ## Compare Hands
+
+def did_p1_win(p1_hand, p2_hand):
+
+	def compare_flush(p1_hand, p2_hand):
+
+		p1_is_flush = p1_hand.flush['flush']
+		p2_is_flush = p2_hand.flush['flush']
+		if p1_is_flush == True and p2_is_flush == False:
+			return True
+		elif p1_is_flush == False and p2_is_flush == True:
+			return False
+		else:
+			return compare_straight(p1_hand, p2_hand)
+
+	def compare_straight(p1_hand, p2_hand):
+
+		p1_is_straight = p1_hand.straight['straight']
+		p2_is_straight = p2_hand.straight['straight']
+		if p1_is_straight == True and p2_is_straight == False:
+			return True
+		elif p1_is_straight == False and p2_is_straight == True:
+			return False
+		elif p1_is_straight == True and p2_is_straight == True:
+			return compare_highcard(p1_hand, p2_hand)
+		else:
+			return compare_four_kind(p1_hand, p2_hand)
+
+	def compare_four_kind(p1_hand, p2_hand):
+
+		p1_is_four_kind = p1_hand.four_kind['four_kind']
+		p2_is_four_kind = p2_hand.four_kind['four_kind']
+
+		if p1_is_four_kind == True and p2_is_four_kind == False:
+			return True
+		elif p1_is_four_kind == False and p2_is_four_kind == True:
+			return False
+		elif p1_is_four_kind == True and p2_is_four_kind == True:
+			
+			p1_fours = p1_hand.four_kind['fours']
+			p2_fours = p2_hand.four_kind['fours']
+			
+			if p1_fours > p2_fours:
+				return True
+			elif p1_fours < p2_fours:
+				return False
+			else:
+				return compare_highcard(p1_hand, p2_hand)
+		else:
+			return compare_full_house(p1_hand, p2_hand)
+
+	def compare_full_house(p1_hand, p2_hand):
+
+		p1_is_full_house = p1_hand.full_house['full_house']
+		p2_is_full_house = p2_hand.full_house['full_house']
+
+		if p1_is_full_house == True and p2_is_full_house == False:
+			return True
+		elif p1_is_full_house == False and p2_is_full_house == True:
+			return False
+		elif p1_is_full_house == True and p2_is_full_house == True:
+
+			p1_threes = p1_hand.full_house['threes']
+			p1_twoes = p1_hand.full_house['twoes']
+			p2_threes = p2_hand.full_house['threes']
+			p2_twoes = p2_hand.full_house['twoes']
+
+			if p1_threes > p2_threes:
+				return True
+			elif p1_threes < p1_threes:
+				return False
+			elif p1_twoes > p2_twoes:
+				return True
+			elif p1_twoes < p2_twoes:
+				return False
+			else:
+				print "Shit, you should never reach me.  Take me out!"
+
+		else:
+			return compare_three_kind(p1_hand, p2_hand)
+
+	def compare_three_kind(p1_hand, p2_hand):
+
+		p1_is_three_kind = p1_hand.three_kind['three_kind']
+		p2_is_three_kind = p2_hand.three_kind['three_kind']
+
+		if p1_is_three_kind == True and p2_is_three_kind == False:
+			return True
+		elif p1_is_three_kind == False and p2_is_three_kind == True:
+			return False
+		elif p1_is_three_kind == True and p2_is_three_kind == True:
+
+			p1_threes = p1_hand.three_kind['threes']
+			p2_threes = p1_hand.three_kind['threes']
+
+			if p1_threes > p2_threes:
+				return True
+			elif p1_threes < p1_threes:
+				return False
+			else:
+				return compare_highcard(p1_hand, p2_hand)
+
+		else:
+			return compare_two_pair
+
+
+	def compare_two_pair(p1_hand, p2_hand):
+
+		p1_is_two_pair = p1_hand.two_pair['two_pair']
+		p2_is_two_pair = p2_hand.two_pair['two_pair']
+
+		if p1_is_two_pair == True and p2_is_two_pair == False:
+			return True
+		elif p1_is_two_pair == False and p2_is_two_pair == True:
+			return False
+		elif p1_is_two_pair == True and p2_is_two_pair == True:
+
+			p1_pairs = p1_hand.three_kind['pairs']
+			p2_pairs = p1_hand.three_kind['pairs']
+
+			if p1_pairs[1] > p2_pairs[1]:
+				return True
+			elif p1_pairs[1] < p1_pairs[1]:
+				return False
+			if p1_pairs[0] > p2_pairs[0]:
+				return True
+			elif p1_pairs[0] < p2_pairs[0]:
+				return False
+			else:
+				return compare_highcard(p1_hand, p2_hand)
+
+		else:
+			return compare_pair(p1_hand, p2_hand)
+
+	def compare_pair(p1_hand, p2_hand):
+
+		p1_is_pair = p1_hand.pair['pair']
+		p2_is_pair = p2_hand.pair['pair']
+
+		if p1_is_pair == True and p2_is_pair == False:
+			return True
+		elif p1_is_pair == False and p2_is_pair == True:
+			return False
+		elif p1_is_pair == True and p2_is_pair == True:
+
+			p1_pair_value = p1_hand.pair['pair_value']
+			p2_pair_value = p1_hand.pair['pair_value']
+
+			if p1_pair_value > p2_pair_value:
+				return True
+			elif p1_pair_value < p2_pair_value:
+				return False
+			else:
+				return compare_highcard(p1_hand, p2_hand)
+
+		else:
+			return compare_highcard(p1_hand, p2_hand)
+
+	def compare_highcard(p1_hand, p2_hand):
+
+		p1_high_to_low = sorted(p1_hand.sorted_hand, True)
+		p2_high_to_low = sorted(p2_hand.sorted_hand, True)
+
+		for x in range(5):
+			if p1_high_to_low[x] > p2_high_to_low[x]:
+				return True
+			elif p1_high_to_low[x] < p2_high_to_low[x]:
+				return False
+
+
