@@ -245,7 +245,7 @@ def did_p1_win(p1_hand, p2_hand):
 		elif p1_is_pair == True and p2_is_pair == True:
 
 			p1_pair_value = p1_hand.pair['pair_value']
-			p2_pair_value = p1_hand.pair['pair_value']
+			p2_pair_value = p2_hand.pair['pair_value']
 
 			if p1_pair_value > p2_pair_value:
 				return True
