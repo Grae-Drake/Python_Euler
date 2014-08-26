@@ -1,4 +1,5 @@
 # Problem 92: Square digit chains
+# Running just over 60 seconds.  Need to tune.
 
 import time
 
@@ -32,13 +33,7 @@ def main():
 			for x in trail[:-1]:
 				eighty_nines.add(x)
 			counter += 1
-		else:
-			print "Fuck me, this isn't supposed to print"
 	return counter
-
-
-
-
 
 if __name__ == '__main__':
 	t1 = time.clock()
