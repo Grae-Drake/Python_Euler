@@ -1,11 +1,13 @@
 # Problem 92: Square digit chains
 
+import time
+
 # Sets to contain numbers converging to 1 and to 89.
 # Using sets because hashable
 ones = set([1])
 eighty_nines = set([89])
 
-limit = 100
+limit = 10000000
 
 def next_square_digit(n):
 
@@ -39,4 +41,6 @@ def main():
 
 
 if __name__ == '__main__':
+	t1 = time.clock()
 	print(main())
+	print "Execution time: {} seconds".format(time.clock() - t1)
