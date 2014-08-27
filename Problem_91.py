@@ -22,3 +22,7 @@ class Triangle(object):
 
 		self.is_right = self.a_square + self.b_square == self.c_square
 
+grid_size = 2
+
+point_field = itertools.product(range(grid_size + 1), repeat=2)
+point_pairs = itertools.permutations(point_field, 2)
