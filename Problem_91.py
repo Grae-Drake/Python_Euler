@@ -22,7 +22,28 @@ class Triangle(object):
 
 		self.is_right = self.a_square + self.b_square == self.c_square
 
-grid_size = 2
+def main(grid_size):
 
-point_field = itertools.product(range(grid_size + 1), repeat=2)
-point_pairs = itertools.permutations(point_field, 2)
+	"""
+	Return the number of right trianges existing with two points at integer
+	coordinates and the third at the origin with 0 <= x1, y1, x2, y2 <= grid_size.
+	"""
+
+	# Generate the coordinate plane and coordinate pairs.
+	# Remember to strip out the origin from the coordinate plane.
+	coordinate_plane = itertools.product(range(grid_size + 1), repeat=2)
+	coordinate_plane = (x for x in coordinate_plane if x != (0,0))
+	coordinate_pairs = itertools.permutations(coordinate_plane, 2)
+
+	# Iterate through the triangles defined by the coordinate_pairs.
+	count = 0
+	for points in coordinate_pairs:	
+		triangle = Triangle(points[0][0], points[0][1], points[1][0], points[1][1])
+		if triangle.is_right:
+			count += 1
+	return count
+
+if __name__ == '__main__':
+	t1 = time.clock()
+	print main(50)
+	print "Execution time = {} seconds".format(time.clock() - t1)
