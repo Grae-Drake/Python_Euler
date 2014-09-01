@@ -4,10 +4,6 @@ import time
 
 limit = 1000000
 
-chains = {}
-
-lookup = {}
-
 def sieve_proper_factors(limit):
 	# Returns a dictionary with keys from 1 to limit with corresponding sets
 	# containing each key's proper factors
@@ -21,13 +17,19 @@ def sieve_proper_factors(limit):
 			multiplier += 1
 	return numbers
 
+def make_lookup(limit):
+	# Returns a dictionary; keys are integers, values are sum of proper factors
+	lookup = {}
+	for number, factors in enumerate(sieve_proper_factors(limit)):
+		lookup[number] = sum(factors)
+	return lookup
 
 def main(limit):
-	print len(sieve_proper_factors(limit))
+	return make_lookup(limit)
 
 
 if __name__ == '__main__':
 	t1 = time.clock()
-	main(limit)
+	testing = main(limit)
 	print "Execution time: {} seconds".format(time.clock() - t1)
 
