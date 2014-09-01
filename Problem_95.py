@@ -2,7 +2,7 @@
 
 import time
 
-limit = 16000
+limit = 1000000
 
 def sieve_proper_factors(limit):
 	# Returns a dictionary with keys from 1 to limit with corresponding sets
@@ -48,10 +48,11 @@ def get_cycle(n, lookup, seen):
 
 
 def main(limit):
+	lookup = make_lookup(limit)
 	seen = set([1])
 	result = {"length": None, "smallest": None}
 	for x in xrange(limit):
-		new_cycle = get_cycle(limit, make_lookup(limit), seen)
+		new_cycle = get_cycle(x, lookup, seen)
 		if new_cycle:
 			seen = seen.union()
 			if len(new_cycle) > result["length"]:
