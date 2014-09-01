@@ -2,8 +2,6 @@
 
 import time
 
-limit = 1000000
-
 def sieve_proper_factors(limit):
 	# Returns a dictionary with keys from 1 to limit with corresponding sets
 	# containing each key's proper factors
@@ -43,29 +41,27 @@ def get_cycle(n, lookup, seen):
 			cycle_list.append(next)
 			next = lookup[next]
 
+def main():
+	# Build a lookup table of integers and proper factors, then iterate through
+	# integers 1 to limit looking for amicable cycles, keeping track of the
+	# longest one found and its smallest member.
 
-
-
-
-def main(limit):
+	limit = 1000000
 	lookup = make_lookup(limit)
 	seen = set([1])
-	result = {"length": None, "smallest": None}
-	for x in xrange(limit):
+	chain = {"length": None, "smallest": None}
+	for x in xrange(1, limit):
 		new_cycle = get_cycle(x, lookup, seen)
 		if new_cycle:
 			seen = seen.union()
-			if len(new_cycle) > result["length"]:
-				result["length"] = len(new_cycle)
-				result["smallest"] = min(new_cycle)
-	return result
-
-
-
+			if len(new_cycle) > chain["length"]:
+				chain["length"] = len(new_cycle)
+				chain["smallest"] = min(new_cycle)
+	return chain
 
 if __name__ == '__main__':
 	t1 = time.clock()
-	testing = main(limit)
+	testing = main()
 	print testing
 	print "Execution time: {} seconds".format(time.clock() - t1)
 
