@@ -13,9 +13,14 @@ def get_tripples(m,n):
 	c = (m ** 2) + (n ** 2)
 	return a, b, c
 
+def get_even_bases(limit):
 
 
-def get_large_bases(limit):
+	"""
+	Look for pythagorean tripples describing one half of an 'almost'
+	equilateral triangle with perimeters below limit and an even base length.
+	Return the sum of the perimeters of each such triangle.
+	"""
 
 	answer = 0
 	perimeter = 0
@@ -33,10 +38,16 @@ def get_large_bases(limit):
 			print "Tripple: {}; Perimeter: {}; m: {}; n: {}".format(tripples, perimeter, m, n)
 		m += 1
 
-	print almost_equilateral_triangles
 	return answer
 
-def get_small_bases(limit):
+def get_odd_bases(limit):
+
+
+	"""
+	Look for pythagorean tripples describing one half of an 'almost'
+	equilateral triangle with perimeters below limit and an odd base length.
+	Return the sum of the perimeters of each such triangle.
+	"""
 
 	answer = 0
 	perimeter = 0
@@ -53,11 +64,10 @@ def get_small_bases(limit):
 			answer += perimeter
 		m += 1
 
-	print almost_equilateral_triangles
 	return answer
 
 def main(limit):
-	return get_large_bases(limit) + get_small_bases(limit)
+	return get_even_bases(limit) + get_odd_bases(limit)
 
 if __name__ == '__main__':
 	t1 = time.clock()
