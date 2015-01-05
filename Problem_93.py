@@ -62,29 +62,40 @@ def targets(digit_sets):
 
     return sorted(list(set(results)))
 
-# Populate a dictionary of digit sets with corresponding target lists
-digit_set_targets = {}
 
-for digit_set in digit_sets:
-    answer = [x[0] for x in targets(targets(targets([digit_set])))]
-    digit_set_targets[digit_set] = answer
+def digit_set_targets(digit_sets):
+
+    # Populate a dictionary of digit sets with corresponding target lists
+    result = {}
+    for digit_set in digit_sets:
+        target_list = [x[0] for x in targets(targets(targets([digit_set])))]
+        result[digit_set] = target_list
+    return result
 
 
-# Iterate through digit_set_targets and pull out the digit set with the largest
-# number of consecutive targets.
-stash = [[], 0]
-for x in digit_set_targets:
-    targets = digit_set_targets[x]
-    counter = 1
-    for index, target in enumerate(targets):
-        if target + 1 in targets:
-            counter += 1
-        else:
-            if counter > stash[1]:
-                stash[1] = counter
-                stash[0] = x
-            counter = 0
+def most_consecutive_targets():
 
-print stash
+    # Iterate through digit_set_targets and pull out the digit set with the
+    # largest number of consecutive targets.
+    result = [[], 0]
+    targets_dictionary = digit_set_targets(digit_sets)
+    for x in targets_dictionary:
+        targets = targets_dictionary[x]
+        counter = 1
+        for index, target in enumerate(targets):
+            if target + 1 in targets:
+                counter += 1
+            else:
+                if counter > result[1]:
+                    result[1] = counter
+                    result[0] = x
+                counter = 0
+    return result
 
-print "Execution time: {}".format(time.clock() - t1)
+
+def main():
+    return most_consecutive_targets()
+
+if __name__ == '__main__':
+    print main()
+    print "Execution time: {}".format(time.clock() - t1)
