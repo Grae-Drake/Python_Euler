@@ -27,26 +27,31 @@ def main():
         words_list = word_file.readlines()[0].rsplit(',')
 
     # Strip out words with more than 10 unique letters.
-    print len(words_list)
-    words_list = [x for x in words_list if len(set(x)) <= 10]
-    print len(words_list)
+    words_list = [x.strip('"') for x in words_list if
+                  len(set(x.strip('"'))) <= 10]
 
     # Group words of similar length together in a dictionary.
-    longest_word = 0
-
+    word_dict = {}
     for word in words_list:
-        longest_word = max(longest_word, len(word))
+        if len(word) not in word_dict:
+            word_dict[len(word)] = [word]
+        else:
+            word_dict[len(word)].append(word)
 
-    word_dict = {n: [] for n in range(1, longest_word + 1)}
+    # Filter out words with no anagrams and group anagrams together.
+    for n in range(1, max(word_dict.keys()) + 1):
+        anagrams = []
+        for word in word_dict[n]:
 
-    for word in words_list:
-        word_dict[len(word)].append(word)
+            word_signature = "".join(sorted(word))
 
-    print word_dict[16]
-
-
-
-
+            for compare in word_dict[n]:
+                if compare != word:
+                    compare_signature = "".join(sorted(compare))
+                    if compare_signature == word_signature:
+                        anagrams.append(tuple(sorted([word, compare])))
+        word_dict[n] = list(set(anagrams))
+        print "{} digit anagrams: {}\n".format(n, word_dict[n])
 
 
 if __name__ == "__main__":
