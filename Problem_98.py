@@ -38,18 +38,18 @@ def main():
         else:
             word_dict[len(word)].append(word)
 
-    # Filter out words with no anagrams and group anagram pairs together.
+    # Gather all anagram pairs.
     anagram_pairs = []
-    for n in range(1, max(word_dict.keys()) + 1):
-        for word in word_dict[n]:
-
+    for n, words in word_dict.iteritems():
+        for word in words:
             word_signature = "".join(sorted(word))
 
-            for compare in word_dict[n]:
+            for compare in words:
                 if compare != word:
                     compare_signature = "".join(sorted(compare))
                     if compare_signature == word_signature:
                         anagram_pairs.append(tuple(sorted([word, compare])))
+
     anagram_pairs = sorted(list(set(anagram_pairs)),
                            key=lambda x: len(x[0]),
                            reverse=True)
