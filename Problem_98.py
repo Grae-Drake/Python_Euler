@@ -56,6 +56,10 @@ def main():
     print anagram_pairs
 
 
+    # Build dictionary of square numbers (with a reference to their root).
+    square_nums = {n ** 2: n for n in xrange(1,31427)}
+    print square_nums[12321]
+
 if __name__ == "__main__":
 
     t1 = time.clock()
