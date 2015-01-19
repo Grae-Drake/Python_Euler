@@ -38,9 +38,9 @@ def main():
         else:
             word_dict[len(word)].append(word)
 
-    # Filter out words with no anagrams and group anagrams together.
+    # Filter out words with no anagrams and group anagram pairs together.
+    anagram_pairs = []
     for n in range(1, max(word_dict.keys()) + 1):
-        anagrams = []
         for word in word_dict[n]:
 
             word_signature = "".join(sorted(word))
@@ -49,9 +49,11 @@ def main():
                 if compare != word:
                     compare_signature = "".join(sorted(compare))
                     if compare_signature == word_signature:
-                        anagrams.append(tuple(sorted([word, compare])))
-        word_dict[n] = list(set(anagrams))
-        print "{} digit anagrams: {}\n".format(n, word_dict[n])
+                        anagram_pairs.append(tuple(sorted([word, compare])))
+    anagram_pairs = sorted(list(set(anagram_pairs)),
+                           key=lambda x: len(x[0]),
+                           reverse=True)
+    print anagram_pairs
 
 
 if __name__ == "__main__":
