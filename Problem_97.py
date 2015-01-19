@@ -16,21 +16,25 @@
 import time
 
 
-def main():
+def main(base, exponent, num_digits):
 
-    base = 28433
-    exponent = 7830457
-    ten_billion = 10 ** 10
-
+    # Finding large powers of 2 is easy in binary.
     binary_string = "1" + ("0" * (exponent))
-    binary_remainder = (int(binary_string, base=2) % ten_billion)
+    binary_remainder = (int(binary_string, base=2) % (num_digits ** 10))
 
-    answer = (binary_remainder * base + 1) % ten_billion
+    answer = (binary_remainder * base + 1) % (num_digits ** 10)
     return answer
 
 
 if __name__ == "__main__":
 
     t1 = time.clock()
-    print main()
+
+    # Constants from the problem.
+    base = 28433
+    exponent = 7830457
+    num_digits = 10
+
+    print main(base, exponent, num_digits)
+
     print time.clock() - t1
