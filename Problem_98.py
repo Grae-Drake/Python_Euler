@@ -18,6 +18,7 @@
 """
 
 import time
+import itertools
 
 
 def main():
@@ -41,24 +42,37 @@ def main():
     # Gather all anagram pairs.
     anagram_pairs = []
     for n, words in word_dict.iteritems():
+
         for word in words:
             word_signature = "".join(sorted(word))
 
             for compare in words:
-                if compare != word:
-                    compare_signature = "".join(sorted(compare))
-                    if compare_signature == word_signature:
-                        anagram_pairs.append(tuple(sorted([word, compare])))
+                compare_signature = "".join(sorted(compare))
+
+                if compare == word:
+                    continue
+                if compare_signature == word_signature:
+                    anagram_pairs.append(tuple(sorted([word, compare])))
 
     anagram_pairs = sorted(list(set(anagram_pairs)),
                            key=lambda x: len(x[0]),
                            reverse=True)
-    print anagram_pairs
-
 
     # Build dictionary of square numbers (with a reference to their root).
-    square_nums = {n ** 2: n for n in xrange(1,31427)}
-    print square_nums[12321]
+    square_nums = {n ** 2: n for n in xrange(1, 31427)}
+    print square_nums[81]
+
+    test_anagram(("CARE", "RACE"))
+
+
+def test_anagram(pair):
+
+    # Take an anagram pair as input. Apply each combination of digits to the
+    # first word and evaluate result in second word.
+
+    combinations = itertools.combinations(range(10), len(pair[0]))
+    print combinations.next()
+
 
 if __name__ == "__main__":
 
