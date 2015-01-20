@@ -20,6 +20,13 @@
 import time
 import itertools
 
+# Build dictionary of square numbers (with a reference to their root).
+square_nums = {}
+for x in xrange(1, 31427):
+    square_nums[x ** 2] = x
+
+print 1369 in square_nums
+
 
 def main():
 
@@ -58,20 +65,36 @@ def main():
                            key=lambda x: len(x[0]),
                            reverse=True)
 
-    # Build dictionary of square numbers (with a reference to their root).
-    square_nums = {n ** 2: n for n in xrange(1, 31427)}
-    print square_nums[81]
-
-    test_anagram(("CARE", "RACE"))
+    for pair in anagram_pairs:
+        print "Testing {}".format(pair)
+        print process_anagram(pair)
 
 
-def test_anagram(pair):
+def process_anagram(pair):
 
-    # Take an anagram pair as input. Apply each combination of digits to the
+    # Take an anagram pair as input. Apply each permutation of digits to the
     # first word and evaluate result in second word.
 
-    combinations = itertools.combinations(range(10), len(pair[0]))
-    print combinations.next()
+    matching_pairs = []
+    word = pair[0]
+    compare = pair[1]
+    permutations = itertools.permutations(range(10), len(pair[0]))
+
+    for permutation in permutations:
+        if permutation[0] == 0:
+            continue
+
+        letter_map = dict(zip(word, permutation))
+
+        n1 = int("".join([str(n) for n in permutation]))
+        if n1 not in square_nums:
+            continue
+
+        n2 = int("".join([str(letter_map[letter]) for letter in compare]))
+        if n2 not in square_nums:
+            continue
+        matching_pairs.append({n1: word, n2: compare})
+    return matching_pairs
 
 
 if __name__ == "__main__":
