@@ -1,7 +1,7 @@
 """
     By replacing each of the letters in the word CARE with 1, 2, 9, and 6
-    respectively, we form a square number: 1296 = 362. What is remarkable is
-    that, by using the same digital substitutions, the anagram, RACE, also
+    respectively, we form a square number: 1296 = 36 ** 2. What is remarkable
+    is that, by using the same digital substitutions, the anagram, RACE, also
     forms a square number: 9216 = (96 ** 2). We shall call CARE (and RACE) a
     square anagram word pair and specify further that leading zeroes are not
     permitted, neither may a different letter have the same digital value as
@@ -102,7 +102,7 @@ def process_anagram_pair(pair, square_nums):
 
 def get_squares(limit):
 
-    # Build dictionary of square numbers (with a reference to their root).
+    # Returns a dictionary of square numbers (with a reference to their root).
     square_nums = {}
     for n in xrange(1, int(math.ceil(limit ** .5))):
         square_nums[n ** 2] = n
