@@ -19,19 +19,13 @@
 
 import time
 import itertools
-
-# Build dictionary of square numbers (with a reference to their root).
-square_nums = {}
-for x in xrange(1, 31427):
-    square_nums[x ** 2] = x
-
-print 1369 in square_nums
+import math
 
 
-def main():
+def main(input_file, limit):
 
     # Read the given wordfile and populate a list.
-    with open("TextFiles/p098_words.txt") as word_file:
+    with open(input_file) as word_file:
         words_list = word_file.readlines()[0].rsplit(',')
 
     # Strip out words with more than 10 unique letters.
@@ -65,17 +59,22 @@ def main():
                            key=lambda x: len(x[0]),
                            reverse=True)
 
+    square_nums = get_squares(limit)
+
+    answer = 0
     for pair in anagram_pairs:
         print "Testing {}".format(pair)
-        print process_anagram(pair)
+        anagram_result = process_anagram_pair(pair, square_nums)
+        print "Highest matching square number: {}".format(anagram_result)
+        answer = max(anagram_result, answer)
+    return answer
 
 
-def process_anagram(pair):
+def process_anagram_pair(pair, square_nums):
 
-    # Take an anagram pair as input. Apply each permutation of digits to the
-    # first word and evaluate result in second word.
-
-    matching_pairs = []
+    # Take an anagram pair as input. Apply each permutation of digits to
+    # the first word and evaluate result in the second word.
+    highest_square = 0
     word = pair[0]
     compare = pair[1]
     permutations = itertools.permutations(range(10), len(pair[0]))
@@ -90,17 +89,33 @@ def process_anagram(pair):
         if n1 not in square_nums:
             continue
 
-        n2 = int("".join([str(letter_map[letter]) for letter in compare]))
+        n2 = "".join([str(letter_map[letter]) for letter in compare])
+        if n2[0] == "0":
+            continue
+
+        n2 = int(n2)
         if n2 not in square_nums:
             continue
-        matching_pairs.append({n1: word, n2: compare})
-    return matching_pairs
+        highest_square = max(n1, n2, highest_square)
+    return highest_square
+
+
+def get_squares(limit):
+
+    # Build dictionary of square numbers (with a reference to their root).
+    square_nums = {}
+    for n in xrange(1, int(math.ceil(limit ** .5))):
+        square_nums[n ** 2] = n
+    return square_nums
 
 
 if __name__ == "__main__":
 
     t1 = time.clock()
 
-    print main()
+    input_file = "TextFiles/p098_words.txt"
+    limit = 10000000000
 
-    print time.clock() - t1
+    print "The answer is {}.".format(main(input_file, limit))
+
+    print "Execution time: {}".format(time.clock() - t1)
