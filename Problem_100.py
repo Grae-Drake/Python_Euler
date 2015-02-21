@@ -13,28 +13,8 @@
     total, determine the number of blue discs that the box would contain.
 """
 
-# This problem is similar to #94: Almost equilateral triangles.
-# (15 / 21) and (14 / 20) each approximate (sqrt(2) / 2).
-# The form of this problem is:
-#   n1 = (num / denom)
-#   n2 = (num - 1 / denom - 1)
-#   product = n1 * n2
-
-# We can determine num for a given denom:
-#   num = ceil(denom * (2 ** .5) / 2)
-
-# We can also determine denom for a given num:
-#   denom = floor(num / ((2 ** .5) / 2))
-
-# Starting with denom = 10^12, we calculate the first num, incrementing num by
-# 1 and testing whether the resulting product == .5.
-
-# NOTE 1: This program works, but reaches the time limit near 10^8, while the
-# problem requires efficient calculation up to 10^12
-
-# NOTE 2: Is it possible to calculate the next solution directly from the
-# previous?  Answers seem to be separated by a factor of ~5.8.  E.g, the first
-# several numerators are: [15, 85, 493, 2871, 16731, 97513, 568345, 3312555]
+# Why does the sequence of red and blue numbers increase in proportion to about
+# 5.8?!?  I have no idea!
 
 
 import math
@@ -78,11 +58,6 @@ def main(limit):
     counter = 21
     results = [{"blue": 15, "red": 7, "total": 21}]
     while results[-1]["total"] < limit:
-        # temp = next_arranged_probability(counter)
-        # results.append(int(temp[0]))
-        # ratio = float(results[-1]) / float(results[-2])
-        # counter = temp[1] * ratio
-
         results.append(next_arranged_probability(counter))
         ratio = float(results[-1]["total"]) / float(results[-2]["total"])
         counter = results[-1]["total"] * ratio
