@@ -56,17 +56,41 @@ def next_arranged_probability(start_number):
         n2 = denominator * (denominator - 1)
         return n2 % n1 == 0
 
-    numerator = get_numerator(start_number)
+    numerator = int(get_numerator(start_number))
     result = None
 
     while result is not True:
         numerator += 1
         result = is_double(numerator)
 
-    return (numerator, get_denominator(numerator), result)
+    denominator = int(get_denominator(numerator))
+
+    return {
+        "blue": numerator,
+        "red": denominator - numerator,
+        "total": denominator
+    }
+
+
+def main(limit):
+
+    ratio = None
+    counter = 21
+    results = [{"blue": 15, "red": 7, "total": 21}]
+    while results[-1]["total"] < limit:
+        # temp = next_arranged_probability(counter)
+        # results.append(int(temp[0]))
+        # ratio = float(results[-1]) / float(results[-2])
+        # counter = temp[1] * ratio
+
+        results.append(next_arranged_probability(counter))
+        ratio = float(results[-1]["total"]) / float(results[-2]["total"])
+        counter = results[-1]["total"] * ratio
+
+    return results
 
 
 if __name__ == "__main__":
     t1 = time.clock()
-    print next_arranged_probability(803761)
+    print main(1000000000000)[-1]["blue"]
     print "Execution time: {} seconds".format(time.clock() - t1)
